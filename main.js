@@ -14,13 +14,13 @@ $(document).ready(function() {
 
   var baseUrl = 'http://157.230.17.132:3016/todos';
 
-  //programma con CRUD completo con feedback tramite console log
+  //programma con CRUD completo con feedback ul
 
-  getAllTodos(console.log);
+  // getAllTodos(printUlFrom);
 
-  // newTodo('nuovaAggiunta2');
-  // updateTodoBy('3', 'nuovo aggiornamento');
-  // deleteTodoById('3');
+   // newTodo('nuovaAggiunta3');
+  // updateTodoBy('15', 'nuovo aggiornamento');
+  // deleteTodoById('15');
 
 
   /**********************************/
@@ -40,21 +40,21 @@ $(document).ready(function() {
 
   //CREATE
   function newTodo(todoText) {
-    ajaxCall(baseUrl, 'POST', console.log, { text: todoText });
+    ajaxCall(baseUrl, 'POST', printUlFrom , { text: todoText });
   }
 
   //UPDATE by Id
 
   function updateTodoBy(id, todoText) {
     var completeUrl = baseUrl + '/' + id;
-    ajaxCall(completeUrl, 'PUT', console.log, { text: todoText });
+    ajaxCall(completeUrl, 'PUT', printUlFrom , { text: todoText });
   }
-
+//   accumulator[index][key] = value;
   //DELETE by Id
 
   function deleteTodoById(id) {
     var completeUrl = baseUrl + '/' + id;
-    ajaxCall(completeUrl, 'DELETE', console.log);
+    ajaxCall(completeUrl, 'DELETE', printUlFrom );
   }
 
 
@@ -65,14 +65,15 @@ $(document).ready(function() {
       url: url,
       method: method,
       data: data,
-      success: function(apiData) {
+      success: function (apiData) {
         console.log('API RETURNS');
         console.log(method + ' request OK');
-         successCallback.apply(console, apiData);
 
-         if (method !== 'GET') {
-           console.log('UPDATED TODOLIST');
-           ajaxCall(baseUrl, 'GET', console.log);
+        if (method !== 'GET') {
+          console.log('UPDATED TODOLIST');
+          ajaxCall(baseUrl, 'GET', successCallback);
+         } else {
+          successCallback(apiData , '#todolist', method);
          }
       },
 
@@ -80,7 +81,18 @@ $(document).ready(function() {
         console.log(error);
       },
     });
+
   }
 
+  function printUlFrom(todos, ulSelector, method) {
+
+      var ulInnerHtml = todos.reduce(function (acc, todo) {
+        return acc += '<li class="todo ' + todo.id + '"><span>' + todo.id + '</span> - ' + todo.text + '</li>';
+      }, '');
+
+      $(ulSelector).html(ulInnerHtml);
+
+
+  }
 
 });
