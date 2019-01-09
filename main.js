@@ -14,14 +14,28 @@ $(document).ready(function() {
 
   var baseUrl = 'http://157.230.17.132:3016/todos';
 
-  //programma con CRUD completo con feedback ul
+  //programma con CRUD completo con interazione utente
 
-  // getAllTodos(printUlFrom);
+  getAllTodos(printUlFrom);
 
-   // newTodo('nuovaAggiunta3');
-  // updateTodoBy('15', 'nuovo aggiornamento');
-  // deleteTodoById('15');
+  $('#nuovoTodo').click(function () {
+    var testoUtente = $('input').val();
+    if (testoUtente !== '') {
+      newTodo(testoUtente);
+    }
+  });
 
+  $(document).on('click', '.modifica', function () {
+
+    var id = $(this).parent().find('span').html();
+    var nuovoTesto = prompt('Nuovo testo modificato');
+    updateTodoBy(id, nuovoTesto);
+  });
+
+  $(document).on('click', '.elimina', function () {
+    var id = $(this).parent().find('span').html();
+    deleteTodoById(id);
+  });
 
   /**********************************/
   /*************FUNZIONI*************/
@@ -86,12 +100,14 @@ $(document).ready(function() {
 
   function printUlFrom(todos, ulSelector, method) {
 
+    var btnModifica = '<button class="modifica" type="button" name="button">Modifica</button>';
+    var btnElimina = '<button class="elimina" type="button" name="button">Elimina</button>';
+
       var ulInnerHtml = todos.reduce(function (acc, todo) {
-        return acc += '<li class="todo ' + todo.id + '"><span>' + todo.id + '</span> - ' + todo.text + '</li>';
+        return acc += '<li class="todo ' + todo.id + '"><span>' + todo.id + '</span> - ' + todo.text + btnModifica + btnElimina + '</li>';
       }, '');
 
       $(ulSelector).html(ulInnerHtml);
-
 
   }
 

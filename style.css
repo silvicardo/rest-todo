@@ -14,7 +14,36 @@
   width: 100vw;
   height: 100vh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
   background: lightgrey;
+}
+
+.nuovaEntry {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nuovaEntry input {
+  margin: 15px;
+  height: 25px;
+  width: 200px;
+  padding: 10px;
+  border-radius: 3px;
+  outline: none;
+}
+button {
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin: 0px 5px;
+  background: white;
+  color: black;
+}
+
+.todo button.elimina {
+  background: red;
+  color: white;
 }
