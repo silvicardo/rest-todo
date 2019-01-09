@@ -8,7 +8,7 @@
 /**********PROGRAMMA**********/
 /*****************************/
 
-$(document).ready(function() {
+$(document).ready(function () {
 
   console.log('rest-todolist');
 
@@ -26,7 +26,6 @@ $(document).ready(function() {
   });
 
   $(document).on('click', '.modifica', function () {
-
     var id = $(this).parent().find('span').html();
     var nuovoTesto = prompt('Nuovo testo modificato');
     updateTodoBy(id, nuovoTesto);
@@ -42,35 +41,37 @@ $(document).ready(function() {
   /**********************************/
 
   //READ
+
   function getAllTodos(successCallback) {
     ajaxCall(baseUrl, 'GET', successCallback);
   }
 
   //READ by Id
+
   function getTodoBy(id, successCallback) {
     var completeUrl = baseUrl + '/' + id;
     ajaxCall(completeUrl, 'GET', successCallback);
   }
 
   //CREATE
+
   function newTodo(todoText) {
-    ajaxCall(baseUrl, 'POST', printUlFrom , { text: todoText });
+    ajaxCall(baseUrl, 'POST', printUlFrom, { text: todoText });
   }
 
   //UPDATE by Id
 
   function updateTodoBy(id, todoText) {
     var completeUrl = baseUrl + '/' + id;
-    ajaxCall(completeUrl, 'PUT', printUlFrom , { text: todoText });
+    ajaxCall(completeUrl, 'PUT', printUlFrom, { text: todoText });
   }
-//   accumulator[index][key] = value;
+
   //DELETE by Id
 
   function deleteTodoById(id) {
     var completeUrl = baseUrl + '/' + id;
-    ajaxCall(completeUrl, 'DELETE', printUlFrom );
+    ajaxCall(completeUrl, 'DELETE', printUlFrom);
   }
-
 
   //MAIN AJAX FUNCTION
   function ajaxCall(url, method, successCallback, data) {
@@ -86,12 +87,12 @@ $(document).ready(function() {
         if (method !== 'GET') {
           console.log('UPDATED TODOLIST');
           ajaxCall(baseUrl, 'GET', successCallback);
-         } else {
-          successCallback(apiData , '#todolist', method);
-         }
+        } else {
+          successCallback(apiData, '#todolist', method);
+        }
       },
 
-      fail: function(error) {
+      fail: function (error) {
         console.log(error);
       },
     });
@@ -103,11 +104,11 @@ $(document).ready(function() {
     var btnModifica = '<button class="modifica" type="button" name="button">Modifica</button>';
     var btnElimina = '<button class="elimina" type="button" name="button">Elimina</button>';
 
-      var ulInnerHtml = todos.reduce(function (acc, todo) {
-        return acc += '<li class="todo ' + todo.id + '"><span>' + todo.id + '</span> - ' + todo.text + btnModifica + btnElimina + '</li>';
-      }, '');
+    var ulInnerHtml = todos.reduce(function (acc, todo) {
+      return acc += '<li class="todo ' + todo.id + '"><span>' + todo.id + '</span> - ' + todo.text + btnModifica + btnElimina + '</li>';
+    }, '');
 
-      $(ulSelector).html(ulInnerHtml);
+    $(ulSelector).html(ulInnerHtml);
 
   }
 
